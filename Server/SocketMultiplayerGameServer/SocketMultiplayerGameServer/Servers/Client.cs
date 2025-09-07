@@ -22,6 +22,20 @@ public class Client
     
     private void ReceiveCallback(IAsyncResult iar)
     {
+        try
+        {
+            if (socket == null || socket.Connected == false) return;
+            
+            int len = socket.EndReceive(iar);
+            if(len <= 0) return;
         
+            message.ReadBuffewr(len);
+            StartRecieve();
+        }
+        catch
+        {
+            
+        }
+
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace SocketMultiplayerGameServer.Tools;
+﻿using SocketGameProtocol;
+
+namespace SocketMultiplayerGameServer.Tools;
 
 public class Message
 {
@@ -19,5 +21,27 @@ public class Message
     public int RemSize
     {
         get { return buffer.Length - startIndex; }
+    }
+
+    public void ReadBuffewr(int len)
+    {
+        startIndex += len;
+        
+        //包头4字节 小于4则没有正确的包
+        if(startIndex <= 4) return;
+        
+        int count = BitConverter.ToInt32(buffer, 0);
+
+        while (true)
+        {
+            if (startIndex >= count + 4)
+            {
+                MainPack pack = (MainPack)MainPack.Descriptor.Parser.ParseFrom(buffer, 4, count);
+                
+                Array.Copy(buffer , count + 4 , buffer , 0 , startIndex - 4 - count);
+                startIndex -= 4 + count;
+            }
+            else break;
+        }
     }
 }
