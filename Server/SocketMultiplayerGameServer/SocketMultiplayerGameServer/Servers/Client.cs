@@ -1,4 +1,6 @@
 ﻿using System.Net.Sockets;
+using SocketGameProtocol;
+using SocketMultiplayerGameServer.DAO;
 using SocketMultiplayerGameServer.Tools;
 
 namespace SocketMultiplayerGameServer.Servers;
@@ -6,11 +8,18 @@ namespace SocketMultiplayerGameServer.Servers;
 public class Client
 {
     private Socket socket;
-    private Message message;
+    private Message message;    
+    private UserData userData;
+    
+    public UserData GetUserData
+    {
+        get { return userData; }
+    }
     
     public Client(Socket socket)
     {
         this.socket = socket;
+        userData = new UserData();
         message = new Message();
         StartRecieve();
     }
@@ -37,5 +46,10 @@ public class Client
             
         }
 
+    }
+
+    public void Send(MainPack pack)
+    {
+        socket.Send(Message.PackData(pack));
     }
 }

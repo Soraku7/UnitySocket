@@ -1,4 +1,5 @@
-﻿using SocketGameProtocol;
+﻿using Google.Protobuf;
+using SocketGameProtocol;
 
 namespace SocketMultiplayerGameServer.Tools;
 
@@ -43,5 +44,13 @@ public class Message
             }
             else break;
         }
+    }
+    
+    public static byte[] PackData(MainPack pack)
+    {
+        byte[] data = pack.ToByteArray(); //包体
+        byte[] head = BitConverter.GetBytes(data.Length); //包头
+
+        return head.Concat(data).ToArray();
     }
 }
