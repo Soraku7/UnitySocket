@@ -13,7 +13,7 @@ public class UserController : BaseController
     //注册
     public MainPack Logon(Server server , Client client , MainPack pack)
     {
-        if (server.Logon(client, pack))
+        if (client.Logon(pack))
         {
             pack.Returncode = ReturnCode.Succeed;
         }

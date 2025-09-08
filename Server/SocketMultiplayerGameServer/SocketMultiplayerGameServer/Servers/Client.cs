@@ -10,15 +10,17 @@ public class Client
     private Socket socket;
     private Message message;    
     private UserData userData;
+    private Server server;
     
     public UserData GetUserData
     {
         get { return userData; }
     }
     
-    public Client(Socket socket)
+    public Client(Socket socket , Server server)
     {
         this.socket = socket;
+        this.server = server;
         userData = new UserData();
         message = new Message();
         StartRecieve();
@@ -38,7 +40,7 @@ public class Client
             int len = socket.EndReceive(iar);
             if(len <= 0) return;
         
-            message.ReadBuffewr(len);
+            message.ReadBuffer(len , HandleRequest);
             StartRecieve();
         }
         catch
@@ -51,5 +53,15 @@ public class Client
     public void Send(MainPack pack)
     {
         socket.Send(Message.PackData(pack));
+    }
+    
+    private void HandleRequest(MainPack pack)
+    {
+        server.HandleRequest(pack , this);
+    }
+    
+    public bool Logon(MainPack pack)
+    {
+        return GetUserData.Logon(pack);
     }
 }

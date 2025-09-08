@@ -24,7 +24,7 @@ public class Message
         get { return buffer.Length - startIndex; }
     }
 
-    public void ReadBuffewr(int len)
+    public void ReadBuffer(int len , Action<MainPack> HandleRequest)
     {
         startIndex += len;
         
@@ -38,7 +38,7 @@ public class Message
             if (startIndex >= count + 4)
             {
                 MainPack pack = (MainPack)MainPack.Descriptor.Parser.ParseFrom(buffer, 4, count);
-                
+                HandleRequest(pack);
                 Array.Copy(buffer , count + 4 , buffer , 0 , startIndex - 4 - count);
                 startIndex -= 4 + count;
             }
