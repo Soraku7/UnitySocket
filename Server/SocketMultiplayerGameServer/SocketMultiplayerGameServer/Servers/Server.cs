@@ -30,12 +30,18 @@ public class Server
     private void AcceptCallback(IAsyncResult iar)
     {
         Socket clientSocket = socket.EndAccept(iar);
-        clients.Add(new Client(socket , this));
+        clients.Add(new Client(clientSocket , this));
         StartAccept();
     }
     
     public void HandleRequest(MainPack pack , Client client)
     {
         controllerManager.HandleRequest(pack, client);
+    }
+    
+    public void RemoveClient(Client client)
+    {
+        clients.Remove(client);
+        client = null;
     }
 }

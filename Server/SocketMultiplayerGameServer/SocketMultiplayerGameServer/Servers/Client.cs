@@ -1,4 +1,5 @@
 ﻿using System.Net.Sockets;
+using MySql.Data.MySqlClient;
 using SocketGameProtocol;
 using SocketMultiplayerGameServer.DAO;
 using SocketMultiplayerGameServer.Tools;
@@ -7,10 +8,16 @@ namespace SocketMultiplayerGameServer.Servers;
 
 public class Client
 {
+        
+    private string connectStr =
+        "database=sys ; data source=localhost ; user = root ; password = 123456789ddd ; pooling = false ; charset = utf8 ; port = 3306";
+    
     private Socket socket;
     private Message message;    
     private UserData userData;
     private Server server;
+    private MySqlConnection mysqlConnection;
+
     
     public UserData GetUserData
     {
@@ -21,6 +28,10 @@ public class Client
     {
         this.socket = socket;
         this.server = server;
+
+        mysqlConnection = new MySqlConnection(connectStr);
+        mysqlConnection.Open();
+        
         userData = new UserData();
         message = new Message();
         StartRecieve();
@@ -33,13 +44,20 @@ public class Client
     
     private void ReceiveCallback(IAsyncResult iar)
     {
+        Console.WriteLine("aaa");
         try
         {
             if (socket == null || socket.Connected == false) return;
-            
+            Console.WriteLine("接收");
             int len = socket.EndReceive(iar);
-            if(len <= 0) return;
+            if(len <= 0)
+            {
+                Console.WriteLine("接收数据为0");
+                Close();
+                return;
+            }
         
+            Console.WriteLine("收到客户端数据" + len);
             message.ReadBuffer(len , HandleRequest);
             StartRecieve();
         }
@@ -62,6 +80,13 @@ public class Client
     
     public bool Logon(MainPack pack)
     {
-        return GetUserData.Logon(pack);
+        return GetUserData.Logon(pack , mysqlConnection);
+    }
+
+    private void Close()
+    {
+        socket.Close();
+        server.RemoveClient(this);
+        mysqlConnection.Close();
     }
 }

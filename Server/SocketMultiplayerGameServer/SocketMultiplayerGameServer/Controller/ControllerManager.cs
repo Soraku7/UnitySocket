@@ -20,6 +20,7 @@ public class ControllerManager
 
     public void HandleRequest(MainPack pack , Client client)
     {
+        Console.WriteLine("响应请求");
         if (controllers.TryGetValue(pack.Requestcode, out BaseController controller))
         {
             string metname = pack.Actioncode.ToString();

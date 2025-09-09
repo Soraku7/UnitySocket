@@ -1,22 +1,34 @@
 using System;
 using System.Collections.Generic;
 using Manager;
+using Request;
 using SocketGameProtocol;
 using UnityEngine;
 
 public class GameFace : MonoBehaviour
 {
     private ClientManager _clientManager;
-
-    private void Start()
+    private RequestManager _requestManager;
+    
+    public static GameFace Instance;
+    
+    private void Awake()
     {
+        if(Instance == null) Instance = this;
+        else Destroy(gameObject);
+        
         _clientManager = new ClientManager(this);
+        _requestManager = new RequestManager(this);
+        
+        
         _clientManager.OnInit();
+        _requestManager.OnInit();
     }
 
     private void OnDestroy()
     {
         _clientManager.OnDestroy();
+        _requestManager.OnDestroy();
     }
 
     public void Send(MainPack pack)
@@ -24,8 +36,18 @@ public class GameFace : MonoBehaviour
         _clientManager.Send(pack);
     }
 
-    private void HandleResponse(MainPack pack)
+    public void HandleResponse(MainPack pack)
     {
-        
+        _requestManager.HandleResponse(pack);
+    }
+    
+    public void AddRequest(BaseRequest request)
+    {
+        _requestManager.AddRequest(request);
+    }
+    
+    public void RemoveRequest(ActionCode actionCode)
+    {
+        _requestManager.RemoveRequest(actionCode);
     }
 }

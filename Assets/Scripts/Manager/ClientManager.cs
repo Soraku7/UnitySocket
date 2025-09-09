@@ -76,7 +76,7 @@ namespace Manager
         
         public void HandleResponse(MainPack pack)
         {
-            
+            GameFace.Instance.HandleResponse(pack);
         }
 
         public void Send(MainPack pack)
