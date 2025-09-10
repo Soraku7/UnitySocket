@@ -9,6 +9,7 @@ public class GameFace : MonoBehaviour
 {
     private ClientManager _clientManager;
     private RequestManager _requestManager;
+    private UIManager _uiManager;
     
     public static GameFace Instance;
     
@@ -19,16 +20,19 @@ public class GameFace : MonoBehaviour
         
         _clientManager = new ClientManager(this);
         _requestManager = new RequestManager(this);
+        _uiManager = new UIManager(this);
         
         
         _clientManager.OnInit();
         _requestManager.OnInit();
+        _uiManager.OnInit();
     }
 
     private void OnDestroy()
     {
         _clientManager.OnDestroy();
         _requestManager.OnDestroy();
+        _uiManager.OnDestroy();
     }
 
     public void Send(MainPack pack)

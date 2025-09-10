@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class UILogon : MonoBehaviour
+    public class UILogon : BasePanel
     {
         private LogonRequest logonRequest;
         private InputField user, pass;
-        private Button logonBtn;
+        private Button logonBtn , loginBtn;
 
         private void Awake()
         {
@@ -17,8 +17,9 @@ namespace UI
             user = transform.Find("UserInput").GetComponent<InputField>();
             pass = transform.Find("PassInput").GetComponent<InputField>();
             logonBtn = transform.Find("LogonBtn").GetComponent<Button>();
+            loginBtn = transform.Find("LoginBtn").GetComponent<Button>();
         }
-
+        
         private void Start()
         {
             logonBtn.onClick.AddListener(OnLogonClick);
@@ -34,5 +35,26 @@ namespace UI
             Debug.Log(user.text + " " + pass.text);
             logonRequest.SendRequest(user.text , pass.text);
         }
+        
+        public override void OnEnter()
+        {
+            base.OnEnter();
+        }
+        
+        public override void OnExit()
+        {
+            base.OnExit();
+        }
+        
+        public override void OnPause()
+        {
+            base.OnPause();
+        }
+        
+        public override void OnRecovery()
+        {
+            base.OnRecovery();
+        }
+
     }
 }
