@@ -6,34 +6,34 @@ namespace UI
 {
     public class UILogin : BasePanel
     {
-        private LogonRequest loginRequest;
-        private InputField user, pass;
-        private Button logonBtn , loginBtn;
+        private LogonRequest _loginRequest;
+        private InputField _user, _pass;
+        private Button _logonBtn , _loginBtn;
 
         private void Awake()
         {
-            loginRequest = transform.parent.GetComponent<LogonRequest>();
-            user = transform.Find("UserInput").GetComponent<InputField>();
-            pass = transform.Find("PassInput").GetComponent<InputField>();
-            logonBtn = transform.Find("LogonBtn").GetComponent<Button>();
-            loginBtn = transform.Find("LoginBtn").GetComponent<Button>();
+            _loginRequest = transform.parent.GetComponent<LogonRequest>();
+            _user = transform.Find("UserInput").GetComponent<InputField>();
+            _pass = transform.Find("PassInput").GetComponent<InputField>();
+            _logonBtn = transform.Find("LogonBtn").GetComponent<Button>();
+            _loginBtn = transform.Find("LoginBtn").GetComponent<Button>();
         }
         
         private void Start()
         {
-            logonBtn.onClick.AddListener(OnLogonClick);
-            loginBtn.onClick.AddListener(OnLoginClick);
+            _logonBtn.onClick.AddListener(OnLogonClick);
+            _loginBtn.onClick.AddListener(OnLoginClick);
         }
 
         private void OnLoginClick()
         {
-            if(user.text == "" || pass.text == "")
+            if(_user.text == "" || _pass.text == "")
             {
                 Debug.Log("用户名或密码不能为空");
                 return;
             }
-            Debug.Log(user.text + " " + pass.text);
-            loginRequest.SendRequest(user.text , pass.text);
+            Debug.Log(_user.text + " " + _pass.text);
+            _loginRequest.SendRequest(_user.text , _pass.text);
         }
 
         private void OnLogonClick()

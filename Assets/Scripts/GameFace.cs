@@ -18,14 +18,15 @@ public class GameFace : MonoBehaviour
         if(Instance == null) Instance = this;
         else Destroy(gameObject);
         
+        _uiManager = new UIManager(this);
         _clientManager = new ClientManager(this);
         _requestManager = new RequestManager(this);
-        _uiManager = new UIManager(this);
         
         
+        _uiManager.OnInit();
         _clientManager.OnInit();
         _requestManager.OnInit();
-        _uiManager.OnInit();
+        
     }
 
     private void OnDestroy()
@@ -53,5 +54,10 @@ public class GameFace : MonoBehaviour
     public void RemoveRequest(ActionCode actionCode)
     {
         _requestManager.RemoveRequest(actionCode);
+    }
+
+    public void ShowMessage(string str , bool sync = false)
+    {
+        _uiManager.ShowMessage(str , sync);
     }
 }

@@ -17,11 +17,11 @@ namespace Request
             switch (pack.Returncode)
             {
                 case ReturnCode.Succeed:
-                    Debug.Log("注册成功");
+                    GameFace.Instance.ShowMessage("注册成功" , true);
                     break;
                 
                 case ReturnCode.Fail:
-                    Debug.Log("注册失败");
+                    GameFace.Instance.ShowMessage("注册失败" , true);
                     break;
             }
         }

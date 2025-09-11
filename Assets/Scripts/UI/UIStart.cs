@@ -3,16 +3,16 @@ using UnityEngine.UI;
 
 public class UIStart : BasePanel
 {
-    private Button loginBtn;
+    private Button _loginBtn;
     
     private void Awake()
     {
-        loginBtn = transform.Find("LoginBtn").GetComponent<Button>();
+        _loginBtn = transform.Find("LoginBtn").GetComponent<Button>();
     }
     
     private void Start()
     {
-        loginBtn.onClick.AddListener(OnStartClick);
+        _loginBtn.onClick.AddListener(OnStartClick);
     }
     
     private void OnStartClick()

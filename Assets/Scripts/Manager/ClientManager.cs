@@ -39,6 +39,7 @@ namespace Manager
             catch (Exception e)
             {
                 Debug.LogWarning(e);
+                GameFace.Instance.ShowMessage("连接服务器失败");
             }
         }
 

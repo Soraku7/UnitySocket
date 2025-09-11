@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UI;
 using UnityEngine;
 
 namespace Manager
@@ -8,7 +9,8 @@ namespace Manager
         private Dictionary<PanelType , BasePanel> _panels = new Dictionary<PanelType, BasePanel>();
         private Stack<BasePanel> _panelStack = new Stack<BasePanel>();
         
-        public Transform _canvasTransform;
+        private Transform _canvasTransform;
+        private UIMessage _message;
         
         public UIManager(GameFace face) : base(face)
         {
@@ -20,6 +22,7 @@ namespace Manager
             _canvasTransform = GameObject.Find("Canvas").transform;
             
             InitPanel();
+            PushPanel(PanelType.Message);
             PushPanel(PanelType.Start);
         }
         
@@ -121,6 +124,16 @@ namespace Manager
                     Debug.LogWarning($"未找到UI Prefab: Prefabs/UI/UI{panelType}");
                 }
             }
+        }
+
+        public void SetUIMessage(UIMessage message)
+        {
+            _message = message;
+        }
+
+        public void ShowMessage(string str , bool sync = false)
+        {
+            _message.ShowMessage(str , sync);
         }
     }
 }
