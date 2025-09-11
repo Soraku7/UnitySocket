@@ -1,19 +1,18 @@
-using System;
-using Request;
+﻿using Request;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI
 {
-    public class UILogon : BasePanel
+    public class UILogin : BasePanel
     {
-        private LogonRequest logonRequest;
+        private LogonRequest loginRequest;
         private InputField user, pass;
         private Button logonBtn , loginBtn;
 
         private void Awake()
         {
-            logonRequest = transform.parent.GetComponent<LogonRequest>();
+            loginRequest = transform.parent.GetComponent<LogonRequest>();
             user = transform.Find("UserInput").GetComponent<InputField>();
             pass = transform.Find("PassInput").GetComponent<InputField>();
             logonBtn = transform.Find("LogonBtn").GetComponent<Button>();
@@ -26,7 +25,7 @@ namespace UI
             loginBtn.onClick.AddListener(OnLoginClick);
         }
 
-        private void OnLogonClick()
+        private void OnLoginClick()
         {
             if(user.text == "" || pass.text == "")
             {
@@ -34,12 +33,12 @@ namespace UI
                 return;
             }
             Debug.Log(user.text + " " + pass.text);
-            logonRequest.SendRequest(user.text , pass.text);
+            loginRequest.SendRequest(user.text , pass.text);
         }
 
-        private void OnLoginClick()
+        private void OnLogonClick()
         {
-            UIManager.PopPanel();
+           UIManager.PushPanel(PanelType.Logon);
         }
         
         public override void OnEnter()

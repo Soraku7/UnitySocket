@@ -60,7 +60,7 @@ namespace Manager
         /// <summary>
         /// 关闭UI
         /// </summary>
-        private void PopPanel()
+        public void PopPanel()
         {
             if(_panelStack.Count <= 0) return;
             

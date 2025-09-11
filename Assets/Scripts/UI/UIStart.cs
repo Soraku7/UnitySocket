@@ -17,6 +17,6 @@ public class UIStart : BasePanel
     
     private void OnStartClick()
     {
-        UIManager.PushPanel(PanelType.Logon);
+        UIManager.PushPanel(PanelType.Login);
     }
 }
