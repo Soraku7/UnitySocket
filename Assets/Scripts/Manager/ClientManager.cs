@@ -35,6 +35,8 @@ namespace Manager
             try
             {
                 _socket.Connect("127.0.0.1", 6666);
+                GameFace.Instance.ShowMessage("连接服务器成功");
+                StartRecieve();
             }
             catch (Exception e)
             {
@@ -65,7 +67,6 @@ namespace Manager
                     CloseSocket();
                     return;
                 }
-
                 _message.ReadBuffer(len, HandleResponse);
                 StartRecieve();
             }

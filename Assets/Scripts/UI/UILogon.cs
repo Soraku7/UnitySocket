@@ -1,5 +1,6 @@
 using System;
 using Request;
+using SocketGameProtocol;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,7 @@ namespace UI
 
         private void Awake()
         {
-            _logonRequest = transform.parent.GetComponent<LogonRequest>();
+            _logonRequest = transform.GetComponent<LogonRequest>();
             _user = transform.Find("UserInput").GetComponent<InputField>();
             _pass = transform.Find("PassInput").GetComponent<InputField>();
             _logonBtn = transform.Find("LogonBtn").GetComponent<Button>();
@@ -60,6 +61,21 @@ namespace UI
         public override void OnRecovery()
         {
             base.OnRecovery();
+        }
+        
+        public void OnResponse(MainPack pack)
+        {
+            switch (pack.Returncode)
+            {
+                case ReturnCode.Succeed:
+                    UIManager.ShowMessage("注册成功" , true);
+                    UIManager.PushPanel(PanelType.RoomList);
+                    break;
+                
+                case ReturnCode.Fail:
+                    UIManager.ShowMessage("注册失败" , true);
+                    break;
+            }
         }
 
     }

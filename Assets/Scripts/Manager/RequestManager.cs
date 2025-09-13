@@ -29,6 +29,7 @@ namespace Manager
             if (_requests.TryGetValue(pack.Actioncode, out var request))
             {
                 request.OnResponse(pack);
+                Debug.Log("pack.Actioncode" + pack.Actioncode);
             }
             else
             {

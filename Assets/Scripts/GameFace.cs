@@ -48,6 +48,7 @@ public class GameFace : MonoBehaviour
     
     public void AddRequest(BaseRequest request)
     {
+        Debug.Log("Adding request" + request.GetActionCode);
         _requestManager.AddRequest(request);
     }
     

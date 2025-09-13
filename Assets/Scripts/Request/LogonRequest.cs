@@ -1,29 +1,25 @@
 ﻿using SocketGameProtocol;
+using UI;
 using UnityEngine;
 
 namespace Request
 {
     public class LogonRequest : BaseRequest 
     {
+        public UILogon uiLogon; 
+        
         public override void Awake()
         {
             requestCode = RequestCode.User;
             actionCode = ActionCode.Logon;
+            
+            uiLogon = transform.GetComponent<UILogon>();
             base.Awake();
         }
         
         public override void OnResponse(MainPack pack)
         {
-            switch (pack.Returncode)
-            {
-                case ReturnCode.Succeed:
-                    GameFace.Instance.ShowMessage("注册成功" , true);
-                    break;
-                
-                case ReturnCode.Fail:
-                    GameFace.Instance.ShowMessage("注册失败" , true);
-                    break;
-            }
+            uiLogon.OnResponse(pack);
         }
 
         public void SendRequest(string user , string pass)

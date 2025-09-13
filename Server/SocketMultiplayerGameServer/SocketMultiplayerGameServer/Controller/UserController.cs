@@ -21,6 +21,7 @@ public class UserController : BaseController
         else
         {
             pack.Returncode = ReturnCode.Fail;
+            Console.WriteLine("注册失败");
         }
         
         return pack;
