@@ -16,6 +16,8 @@ public class ControllerManager
         
         UserController userController = new UserController();
         controllers.Add(userController.GetRequestCode , userController);
+        RoomController roomController = new RoomController();
+        controllers.Add(roomController.GetRequestCode , roomController);
     }
 
     public void HandleRequest(MainPack pack , Client client)

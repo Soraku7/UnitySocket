@@ -24,6 +24,11 @@ public class Client
         get { return userData; }
     }
     
+    public MySqlConnection GetMysqlConnection
+    {
+        get { return mysqlConnection; }
+    }
+    
     public Client(Socket socket , Server server)
     {
         this.socket = socket;
@@ -44,7 +49,6 @@ public class Client
     
     private void ReceiveCallback(IAsyncResult iar)
     {
-        Console.WriteLine("aaa");
         try
         {
             if (socket == null || socket.Connected == false) return;
@@ -76,11 +80,6 @@ public class Client
     private void HandleRequest(MainPack pack)
     {
         server.HandleRequest(pack , this);
-    }
-    
-    public bool Logon(MainPack pack)
-    {
-        return GetUserData.Logon(pack , mysqlConnection);
     }
 
     private void Close()

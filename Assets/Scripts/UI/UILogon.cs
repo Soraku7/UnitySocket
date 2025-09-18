@@ -68,12 +68,12 @@ namespace UI
             switch (pack.Returncode)
             {
                 case ReturnCode.Succeed:
-                    UIManager.ShowMessage("注册成功" , true);
+                    UIManager.ShowMessage("注册成功");
                     UIManager.PushPanel(PanelType.RoomList);
                     break;
                 
                 case ReturnCode.Fail:
-                    UIManager.ShowMessage("注册失败" , true);
+                    UIManager.ShowMessage("注册失败");
                     break;
             }
         }

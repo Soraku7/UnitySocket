@@ -13,7 +13,7 @@ namespace UI
 
         private void Awake()
         {
-            _loginRequest = transform.parent.GetComponent<LoginRequest>();
+            _loginRequest = transform.GetComponent<LoginRequest>();
             _user = transform.Find("UserInput").GetComponent<InputField>();
             _pass = transform.Find("PassInput").GetComponent<InputField>();
             _logonBtn = transform.Find("LogonBtn").GetComponent<Button>();
@@ -67,12 +67,12 @@ namespace UI
             switch (pack.Returncode)
             {
                 case ReturnCode.Succeed:
-                    UIManager.ShowMessage("登录成功" , true);
+                    UIManager.ShowMessage("登录成功");
                     UIManager.PushPanel(PanelType.RoomList);
                     break;
                 
                 case ReturnCode.Fail:
-                    UIManager.ShowMessage("登录失败" , true);
+                    UIManager.ShowMessage("登录失败");
                     break;
             }
         }

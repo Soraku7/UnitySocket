@@ -35,4 +35,19 @@ public class UserData
             return false;
         }
     } 
+    
+    public bool Login(MainPack pack , MySqlConnection mysqlConnection)
+    {
+        string username = pack.Loginpack.Username;
+        string password = pack.Loginpack.Password;
+        
+        string sql = "SELECT * FROM `sys`.`userdata` WHERE username = '" + username + "' AND password = '" + password + "';";
+        MySqlCommand cmd = new MySqlCommand(sql , mysqlConnection);
+        MySqlDataReader read = cmd.ExecuteReader();
+
+        bool result = read.HasRows;
+        read.Close();
+        
+        return result;
+    }
 }
