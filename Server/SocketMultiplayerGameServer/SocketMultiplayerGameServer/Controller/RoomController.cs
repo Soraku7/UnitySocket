@@ -9,15 +9,24 @@ public class RoomController : BaseController
     {
         requestCode = RequestCode.Room;
     }
-    
-    public MainPack CreateRoom(Server server , Client client , MainPack pack)
+
+    public MainPack CreateRoom(Server server, Client client, MainPack pack)
     {
-        pack.Returncode = server.CreateRoom(client, pack);
-        return pack;
+        return server.CreateRoom(client, pack);
     }
 
-    public MainPack FindRoom(Server server , Client client , MainPack pack)
+    public MainPack FindRoom(Server server, Client client, MainPack pack)
     {
         return server.FindRoom();
+    }
+
+    public MainPack JoinRoom(Server server, Client client, MainPack pack)
+    {
+        return server.JoinRoom(client, pack);
+    }
+
+    public MainPack Exit(Server server, Client client, MainPack pack)
+    {
+        return server.ExitRoom(client, pack);
     }
 }

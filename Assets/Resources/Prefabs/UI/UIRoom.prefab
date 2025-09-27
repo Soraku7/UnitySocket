@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 4539957326760124803}
   - component: {fileID: 4539957326760124828}
   m_Layer: 5
-  m_Name: Button
+  m_Name: SendBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -633,7 +633,7 @@ GameObject:
   - component: {fileID: 4539957327165092882}
   - component: {fileID: 4539957327165092883}
   m_Layer: 5
-  m_Name: Button
+  m_Name: BackBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -875,7 +875,7 @@ GameObject:
   - component: {fileID: 4539957327554239923}
   - component: {fileID: 4539957327554239884}
   m_Layer: 5
-  m_Name: Button
+  m_Name: StartBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -992,8 +992,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4539957327555569874}
+  - component: {fileID: 4659959365689548675}
+  - component: {fileID: 7236586046909339961}
   m_Layer: 5
-  m_Name: RoomPanel
+  m_Name: UIRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1020,6 +1022,31 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4659959365689548675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4539957327555569875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9aaf0301fe145eda6a9ddacb3670889, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  userItem: {fileID: 762856753894338724, guid: a12ad69f735e23c418c84fe4367f8a4b, type: 3}
+--- !u!114 &7236586046909339961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4539957327555569875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a8e3a6b9b3247f180b15ec06c858621, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4539957327611417217
 GameObject:
   m_ObjectHideFlags: 0

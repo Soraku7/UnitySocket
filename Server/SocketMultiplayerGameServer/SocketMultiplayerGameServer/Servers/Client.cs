@@ -18,6 +18,19 @@ public class Client
     private Server server;
     private MySqlConnection mysqlConnection;
 
+    private string _username;
+
+    public Room GetRoom
+    {
+        get;
+        set;
+    }
+
+    public string UserName
+    {
+        get;
+        set;
+    }
     
     public UserData GetUserData
     {

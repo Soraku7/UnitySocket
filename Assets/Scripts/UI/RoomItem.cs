@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI
@@ -10,6 +11,9 @@ namespace UI
         private Text _titleTex;
         private Text _numTex;
         private Text _stateTex;
+        
+        [HideInInspector]
+        public UIRoomList uiRoomList;
 
         private void Awake()
         {
@@ -27,6 +31,7 @@ namespace UI
         private void OnJoinClick()
         {
             Debug.Log("Join Room: " + _titleTex.text);
+            uiRoomList.JoinRoom(_titleTex.text);
         }
         
         public void SetRoomInfo(string title, int curnum, int maxnum , int state)

@@ -34,6 +34,7 @@ public class UserController : BaseController
         if (client.GetUserData.Login(pack, client.GetMysqlConnection))
         {
             pack.Returncode = ReturnCode.Succeed;
+            client.UserName = pack.Loginpack.Username;
         }
         else
         {

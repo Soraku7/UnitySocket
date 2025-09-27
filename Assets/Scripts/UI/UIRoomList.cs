@@ -23,6 +23,7 @@ namespace UI
         
         private CreateRoomRequest _createRoomRequest;
         private FindRoomRequest _findRoomRequest;
+        private JoinRoomRequest _joinRoomRequest;
 
         private void Awake()
         {
@@ -38,6 +39,7 @@ namespace UI
             
             _createRoomRequest = transform.GetComponent<CreateRoomRequest>();
             _findRoomRequest = transform.GetComponent<FindRoomRequest>();
+            _joinRoomRequest = transform.GetComponent<JoinRoomRequest>();
         }
 
         private void Start()
@@ -76,7 +78,8 @@ namespace UI
             {
                 case ReturnCode.Succeed:
                     UIManager.ShowMessage("创建成功");
-                    // UIManager.PushPanel(PanelType.Room);
+                    UIRoom room = UIManager.PushPanel(PanelType.Room).GetComponent<UIRoom>();
+                    room.UpdatePlayerList(pack);
                     break;
                 case ReturnCode.Fail:
                     UIManager.ShowMessage("创建失败");
@@ -100,6 +103,26 @@ namespace UI
                     break;
             }
         }
+
+        public void JoinRoomResponse(MainPack pack)
+        {
+            switch (pack.Returncode)
+            {
+                case ReturnCode.Succeed:
+                    UIManager.ShowMessage("加入房间成功");
+                    UIRoom room = UIManager.PushPanel(PanelType.Room).GetComponent<UIRoom>();
+                    room.UpdatePlayerList(pack);
+                    break;
+                case ReturnCode.Fail:
+                    UIManager.ShowMessage("加入房间失败");
+                    break;
+            }
+        }
+
+        public void JoinRoom(string roomName)
+        {
+            _joinRoomRequest.SendRequest(roomName);
+        }
         
         private void UpdateRoomList(MainPack pack)
         {
@@ -112,6 +135,7 @@ namespace UI
             {
                 RoomItem item = Instantiate(roomItem , _roomListContent).GetComponent<RoomItem>();
                 item.SetRoomInfo(roomPack.Roomname , roomPack.Curnum , roomPack.Maxnum , roomPack.Statc);
+                item.uiRoomList = this;
             }
         }
     }
