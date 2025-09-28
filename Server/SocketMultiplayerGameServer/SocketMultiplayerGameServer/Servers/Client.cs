@@ -97,6 +97,11 @@ public class Client
 
     private void Close()
     {
+        if (GetRoom != null)
+        {
+            GetRoom.Exit(this);
+        }
+        
         socket.Close();
         server.RemoveClient(this);
         mysqlConnection.Close();

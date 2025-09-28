@@ -1,4 +1,5 @@
 ﻿using System;
+using Request;
 using SocketGameProtocol;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -8,27 +9,31 @@ namespace UI
 {
     public class UIRoom : BasePanel
     {
-        private Button _backBtn; 
+        private Button _backBtn;
         private Button _sendBtn;
         private Button _startBtn;
-        
+
         private InputField _inputText;
         private Scrollbar _scrollbar;
-        
+
         private Transform _userListcontent;
 
         public GameObject userItem;
-        
+
+        private RoomExitRequest _roomExitRequest;
+
         private void Awake()
         {
             _backBtn = transform.Find("OtherList/BackBtn").GetComponent<Button>();
             _sendBtn = transform.Find("OtherList/SendBtn").GetComponent<Button>();
             _startBtn = transform.Find("OtherList/StartBtn").GetComponent<Button>();
-            
+
             _inputText = transform.Find("OtherList/InputField").GetComponent<InputField>();
             _scrollbar = transform.Find("OtherList/Scrollbar").GetComponent<Scrollbar>();
-            
+
             _userListcontent = transform.Find("UserList");
+
+            _roomExitRequest = transform.GetComponent<RoomExitRequest>();
         }
 
         private void Start()
@@ -40,25 +45,30 @@ namespace UI
 
         private void OnBackClick()
         {
+            _roomExitRequest.SendRequest();
             UIManager.PopPanel();
         }
 
         private void OnSendClick()
         {
-            
         }
-        
+
         private void OnStartClick()
         {
-            
+        }
+
+        public void ExitRoomResponse()
+        {
+            UIManager.PopPanel();
         }
 
         public void UpdatePlayerList(MainPack pack)
         {
-            for(int i = 0; i < _userListcontent.childCount; i++)
+            for (int i = 0; i < _userListcontent.childCount; i++)
             {
                 Destroy(_userListcontent.GetChild(i).gameObject);
             }
+
             Debug.Log("更新人数");
             foreach (PlayerPack playerPack in pack.Playerpack)
             {

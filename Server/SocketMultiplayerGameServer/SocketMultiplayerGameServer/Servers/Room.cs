@@ -70,9 +70,21 @@ public class Room
 
     public void Exit(Client client)
     {
+        MainPack mainPack = new MainPack();
+        
+        //判断房主退出
+        if (client == _clients[0])
+        {
+            client.GetRoom = null;
+            mainPack.Actioncode = ActionCode.Exit;
+            Boardcast(client , mainPack);
+            Console.WriteLine("房主退出");
+            return;
+        }
+        
         _clients.Remove(client);
         client.GetRoom = null;
-        MainPack mainPack = new MainPack();
+        
         mainPack.Actioncode = ActionCode.PlayerList;
 
         foreach (PlayerPack player in GetplayerInfo())
