@@ -46,7 +46,6 @@ namespace UI
         private void OnBackClick()
         {
             _roomExitRequest.SendRequest();
-            UIManager.PopPanel();
         }
 
         private void OnSendClick()

@@ -142,8 +142,13 @@ public class Server
             return pack;
         }
         
-        client.GetRoom.Exit(client);
+        client.GetRoom.Exit(this , client);
         pack.Returncode = ReturnCode.Succeed;
         return pack;
+    }
+
+    public void RemoveRoom(Room room)
+    {
+        _rooms.Remove(room);
     }
 }

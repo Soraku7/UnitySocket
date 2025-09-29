@@ -93,7 +93,6 @@ namespace UI
             {
                 case ReturnCode.Succeed:
                     UIManager.ShowMessage("查询成功  一共有" + pack.Roompack.Count + "个房间");
-                    UpdateRoomList(pack);
                     break;
                 case ReturnCode.Fail:
                     UIManager.ShowMessage("查询失败");
@@ -102,6 +101,7 @@ namespace UI
                     UIManager.ShowMessage("没有房间");
                     break;
             }
+            UpdateRoomList(pack);
         }
 
         public void JoinRoomResponse(MainPack pack)

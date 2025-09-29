@@ -68,7 +68,7 @@ public class Room
         Boardcast(client , pack);
     }
 
-    public void Exit(Client client)
+    public void Exit(Server server , Client client)
     {
         MainPack mainPack = new MainPack();
         
@@ -78,6 +78,7 @@ public class Room
             client.GetRoom = null;
             mainPack.Actioncode = ActionCode.Exit;
             Boardcast(client , mainPack);
+            server.RemoveRoom(this);
             Console.WriteLine("房主退出");
             return;
         }

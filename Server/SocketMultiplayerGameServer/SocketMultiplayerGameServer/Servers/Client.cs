@@ -99,7 +99,7 @@ public class Client
     {
         if (GetRoom != null)
         {
-            GetRoom.Exit(this);
+            GetRoom.Exit(server , this);
         }
         
         socket.Close();
