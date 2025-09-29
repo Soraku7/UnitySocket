@@ -56,6 +56,13 @@ public class Room
     public void Join(Client client)
     {
         _clients.Add(client);
+
+        if (_roomPack.Maxnum >= _clients.Count)
+        {
+            //满人了
+            _roomPack.Statc = 1;
+        }
+        
         client.GetRoom = this;
         MainPack pack = new MainPack();
         pack.Actioncode = ActionCode.PlayerList;
@@ -84,6 +91,10 @@ public class Room
         }
         
         _clients.Remove(client);
+
+        //更新房间状态为可加入
+        _roomPack.Statc = 0;
+        
         client.GetRoom = null;
         
         mainPack.Actioncode = ActionCode.PlayerList;

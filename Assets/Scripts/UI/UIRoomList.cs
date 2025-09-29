@@ -116,6 +116,9 @@ namespace UI
                 case ReturnCode.Fail:
                     UIManager.ShowMessage("加入房间失败");
                     break;
+                default:
+                    UIManager.ShowMessage("房间不存在");
+                    break;
             }
         }
 
