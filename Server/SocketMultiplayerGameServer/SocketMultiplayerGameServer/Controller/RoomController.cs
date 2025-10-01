@@ -29,4 +29,10 @@ public class RoomController : BaseController
     {
         return server.ExitRoom(client, pack);
     }
+
+    public MainPack Chat(Server server, Client client, MainPack pack)
+    {
+        server.Chat(client , pack);
+        return null;
+    }
 }

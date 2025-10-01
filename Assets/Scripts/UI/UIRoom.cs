@@ -16,11 +16,14 @@ namespace UI
         private InputField _inputText;
         private Scrollbar _scrollbar;
 
+        private Text _chatText;
+
         private Transform _userListcontent;
 
         public GameObject userItem;
 
         private RoomExitRequest _roomExitRequest;
+        private ChatRequest _chatRequest;
 
         private void Awake()
         {
@@ -30,10 +33,13 @@ namespace UI
 
             _inputText = transform.Find("OtherList/InputField").GetComponent<InputField>();
             _scrollbar = transform.Find("OtherList/Scrollbar").GetComponent<Scrollbar>();
+            
+            _chatText = transform.Find("OtherList/MessageList/Text").GetComponent<Text>();
 
             _userListcontent = transform.Find("UserList");
 
             _roomExitRequest = transform.GetComponent<RoomExitRequest>();
+            _chatRequest = transform.GetComponent<ChatRequest>();
         }
 
         private void Start()
@@ -50,6 +56,14 @@ namespace UI
 
         private void OnSendClick()
         {
+            if (_inputText.text == "")
+            {
+                UIManager.ShowMessage("发送内容不能为空");
+                return;
+            }
+            _chatRequest.SendRequest(_inputText.text);
+            _chatText.text += "我:" + _inputText.text + "\n";
+            _inputText.text = "";
         }
 
         private void OnStartClick()
@@ -59,6 +73,11 @@ namespace UI
         public void ExitRoomResponse()
         {
             UIManager.PopPanel();
+        }
+
+        public void ChatResponse(string str)
+        {
+            _chatText.text += str + "\n";
         }
 
         public void UpdatePlayerList(MainPack pack)

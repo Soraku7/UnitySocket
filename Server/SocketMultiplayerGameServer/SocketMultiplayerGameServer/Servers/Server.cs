@@ -151,4 +151,11 @@ public class Server
     {
         _rooms.Remove(room);
     }
+
+    public void Chat(Client client , MainPack pack)
+    {
+        pack.Str = client.UserName + ":" + pack.Str;
+        
+        client.GetRoom.Boardcast(client , pack);
+    }
 }
