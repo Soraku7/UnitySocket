@@ -996,6 +996,8 @@ GameObject:
   - component: {fileID: 7236586046909339961}
   - component: {fileID: 4051797013112593496}
   - component: {fileID: 2845648395260353956}
+  - component: {fileID: -5409201403105499913}
+  - component: {fileID: -2919713931340390155}
   m_Layer: 5
   m_Name: UIRoom
   m_TagString: Untagged
@@ -1071,6 +1073,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2edac1add11f431cb31b3309c6a04945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-5409201403105499913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4539957327555569875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1ced1ffd42433e9b488044a3abc2c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-2919713931340390155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4539957327555569875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3188f3b3166411486b737d2dcbe7fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4539957327611417217

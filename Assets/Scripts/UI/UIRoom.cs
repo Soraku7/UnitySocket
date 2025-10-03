@@ -24,6 +24,7 @@ namespace UI
 
         private RoomExitRequest _roomExitRequest;
         private ChatRequest _chatRequest;
+        private StartGameRequest _startGameRequest;
 
         private void Awake()
         {
@@ -40,6 +41,7 @@ namespace UI
 
             _roomExitRequest = transform.GetComponent<RoomExitRequest>();
             _chatRequest = transform.GetComponent<ChatRequest>();
+            _startGameRequest = transform.GetComponent<StartGameRequest>();
         }
 
         private void Start()
@@ -68,6 +70,7 @@ namespace UI
 
         private void OnStartClick()
         {
+            _startGameRequest.SendRequest();
         }
 
         public void ExitRoomResponse()
@@ -77,7 +80,22 @@ namespace UI
 
         public void ChatResponse(string str)
         {
+            Debug.Log(str);
             _chatText.text += str + "\n";
+        }
+
+        public void StartGameResponse(MainPack pack)
+        {
+            switch (pack.Returncode)
+            {
+                case ReturnCode.Fail:
+                    UIManager.ShowMessage("游戏开始失败,您不是房主");
+                    break;
+                
+                case ReturnCode.Succeed:
+                    UIManager.ShowMessage("游戏开始");
+                    break;
+            }
         }
 
         public void UpdatePlayerList(MainPack pack)
