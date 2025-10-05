@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Request;
 using SocketGameProtocol;
 using UnityEngine;
@@ -111,6 +112,12 @@ namespace UI
                 UserItem item = Instantiate(userItem, _userListcontent).GetComponent<UserItem>();
                 item.SetUserInfo(playerPack.Playername);
             }
+        }
+
+        public void GameStarting(List<PlayerPack> packs)
+        {
+            UIGame uiGame = UIManager.PushPanel(PanelType.Game).GetComponent<UIGame>();
+            uiGame.UpdateList(packs);
         }
     }
 }

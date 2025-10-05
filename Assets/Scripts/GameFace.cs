@@ -10,6 +10,7 @@ public class GameFace : MonoBehaviour
     private ClientManager _clientManager;
     private RequestManager _requestManager;
     private UIManager _uiManager;
+    private PlayerManager _playerManager;
     
     public static GameFace Instance;
     
@@ -21,6 +22,7 @@ public class GameFace : MonoBehaviour
         _uiManager = new UIManager(this);
         _clientManager = new ClientManager(this);
         _requestManager = new RequestManager(this);
+        _playerManager = new PlayerManager(this);
         
         
         _uiManager.OnInit();
@@ -60,5 +62,20 @@ public class GameFace : MonoBehaviour
     public void ShowMessage(string str , bool sync = false)
     {
         _uiManager.ShowMessage(str , sync);
+    }
+
+    public void SetSelfId(string id)
+    {
+        _playerManager.CurPlayerId = id;
+    }
+
+    public void AddPlayer(List<PlayerPack> playerPacks)
+    {
+        _playerManager.AddPlayer(playerPacks);
+    }
+
+    public void RemovePlayer(string id)
+    {
+        _playerManager.RemovePlayer(id);
     }
 }
