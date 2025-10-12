@@ -52,7 +52,7 @@ public class Server
     {
         try
         {
-            Room room = new Room(client, pack.Roompack[0]);
+            Room room = new Room(client, pack.Roompack[0] , this);
             _rooms.Add(room);
 
             foreach (var p in room.GetplayerInfo())
@@ -154,7 +154,7 @@ public class Server
 
     public void Chat(Client client , MainPack pack)
     {
-        pack.Str = client.UserName + ":" + pack.Str;
+        pack.Str = client.GetUserInfo.UserName + ":" + pack.Str;
         
         client.GetRoom.Boardcast(client , pack);
     }

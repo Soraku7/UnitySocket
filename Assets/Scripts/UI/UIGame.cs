@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Request;
 using SocketGameProtocol;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,13 +15,18 @@ namespace UI
         private Button _exitButton;
 
         private float _curTime;
+        
+        private GameExitRequest _gameExitRequest;
 
         private Dictionary<string , PlayerInfoItem> _itemList = new Dictionary<string , PlayerInfoItem>();
         private void Awake()
         {
             _listTransform = transform.Find("List");
+            Debug.Log(transform.Find("Time").name);
             _timeText = transform.Find("Time/Text").GetComponent<Text>();
             _exitButton = transform.Find("ExitBtn").GetComponent<Button>();
+            
+            _gameExitRequest = transform.GetComponent<GameExitRequest>();
         }
 
         private void Start()
@@ -49,12 +55,19 @@ namespace UI
 
         private void OnExitClick()
         {
-            
+            _gameExitRequest.SendRequest();
+            GameFace.Instance.GameExit();
         }
 
-        public void UpdateList(List<PlayerPack> packs)
+        public void UpdateList(MainPack packs)
         {
-            foreach (var p in packs)
+            for(int i = 0 ; i < _listTransform.childCount ; i++)
+            {
+                Destroy(_listTransform.GetChild(i).gameObject);
+            }
+            _itemList.Clear();
+            
+            foreach (var p in packs.Playerpack)
             {
                 GameObject item = Instantiate(itemPrefab, Vector3.zero, Quaternion.identity , _listTransform);
                 PlayerInfoItem playerItem = item.GetComponent<PlayerInfoItem>();

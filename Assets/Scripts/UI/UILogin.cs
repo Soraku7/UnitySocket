@@ -68,6 +68,7 @@ namespace UI
             {
                 case ReturnCode.Succeed:
                     UIManager.ShowMessage("登录成功");
+                    GameFace.Instance.userName = _user.text;
                     UIManager.PushPanel(PanelType.RoomList);
                     break;
                 

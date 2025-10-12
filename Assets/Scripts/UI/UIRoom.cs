@@ -114,7 +114,7 @@ namespace UI
             }
         }
 
-        public void GameStarting(List<PlayerPack> packs)
+        public void GameStarting(MainPack packs)
         {
             UIGame uiGame = UIManager.PushPanel(PanelType.Game).GetComponent<UIGame>();
             uiGame.UpdateList(packs);

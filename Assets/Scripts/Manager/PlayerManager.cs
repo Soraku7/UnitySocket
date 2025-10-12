@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Player;
 using SocketGameProtocol;
 using UnityEngine;
 
@@ -24,22 +25,24 @@ namespace Manager
         public override void OnInit()
         {
             base.OnInit();
-            _character = Resources.Load("Prefab/Character") as GameObject;
+            _character = Resources.Load("Prefabs/Character") as GameObject;
         }
 
-        public void AddPlayer(List<PlayerPack> pack)
+        public void AddPlayer(MainPack pack)
         {
-            _spawnPos = GameObject.Find("SpawnPos").transform;
-            foreach (var p in pack)
+            _spawnPos = GameObject.Find("SpawnPosition").transform;
+            foreach (var p in pack.Playerpack)
             {
-                GameObject gameObject = GameObject.Instantiate(_character, _spawnPos.position, Quaternion.identity);
-                if (p.Playername.Equals(CurPlayerId))
+                GameObject character = GameObject.Instantiate(_character, _spawnPos.position, Quaternion.identity);
+                if (p.Playername.Equals(GameFace.Instance.userName))
                 {
                     //创建本地角色
+                    character.AddComponent<PlayerController>();
+                    character.transform.Find("HandGun").gameObject.AddComponent<GunController>();
                 }
                 //创建其他客户端角色
                 
-                _players.Add(p.Playername , gameObject);
+                _players.Add(p.Playername , character);
             }
         }
 
@@ -55,6 +58,16 @@ namespace Manager
                 Debug.Log("移除玩家失败");
             }
             
+        }
+
+        public void GameExit()
+        {
+            foreach (var player in _players.Values)
+            {
+                GameObject.Destroy(player);
+            }
+            
+            _players.Clear();
         }
     }
 }

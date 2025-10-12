@@ -25,14 +25,15 @@ namespace Request
             if (isStart != null)
             {
                 Debug.Log("游戏正式开始");
-                GameFace.Instance.AddPlayer(isStart.Playerpack.ToList());
-                _uiRoom.GameStarting(isStart.Playerpack.ToList());
+                GameFace.Instance.AddPlayer(isStart);
+                _uiRoom.GameStarting(isStart);
                 isStart = null;
             }
         }
 
         public override void OnResponse(MainPack pack)
         {
+            Debug.Log("收到游戏开始的回应");
             isStart = pack;
         }
         

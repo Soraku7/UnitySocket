@@ -13,6 +13,8 @@ public class GameFace : MonoBehaviour
     private PlayerManager _playerManager;
     
     public static GameFace Instance;
+
+    public string userName;
     
     private void Awake()
     {
@@ -28,6 +30,7 @@ public class GameFace : MonoBehaviour
         _uiManager.OnInit();
         _clientManager.OnInit();
         _requestManager.OnInit();
+        _playerManager.OnInit();
         
     }
 
@@ -36,6 +39,7 @@ public class GameFace : MonoBehaviour
         _clientManager.OnDestroy();
         _requestManager.OnDestroy();
         _uiManager.OnDestroy();
+        _playerManager.OnDestroy();
     }
 
     public void Send(MainPack pack)
@@ -69,7 +73,7 @@ public class GameFace : MonoBehaviour
         _playerManager.CurPlayerId = id;
     }
 
-    public void AddPlayer(List<PlayerPack> playerPacks)
+    public void AddPlayer(MainPack playerPacks)
     {
         _playerManager.AddPlayer(playerPacks);
     }
@@ -77,5 +81,12 @@ public class GameFace : MonoBehaviour
     public void RemovePlayer(string id)
     {
         _playerManager.RemovePlayer(id);
+    }
+    
+    public void GameExit()
+    {
+        _playerManager.GameExit();
+        _uiManager.PopPanel();
+        _uiManager.PopPanel();
     }
 }

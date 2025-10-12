@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8370477483184407438}
   - component: {fileID: 8370477483184407437}
-  - component: {fileID: 9114247469195655678}
   m_Layer: 0
   m_Name: HandGun
   m_TagString: Untagged
@@ -89,18 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &9114247469195655678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8370477483184407439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e8df38cd7984ab5a70678bebf11120b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8370477483382861321
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +186,6 @@ GameObject:
   - component: {fileID: 8370477483949179630}
   - component: {fileID: 8370477483949179631}
   - component: {fileID: 5855711768932554583}
-  - component: {fileID: 6925491369305076757}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -297,18 +283,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6925491369305076757
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8370477483949179624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e59048c39d44df6b2e3f03fbb7f4d69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8370477484198283448
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,8 @@ public class Room
 {
     private RoomPack _roomPack;
 
+    private Server _server;
+
     List<Client> _clients = new List<Client>();
     public RoomPack GetRoomInfo
     {
@@ -18,11 +20,12 @@ public class Room
         }
     }
     
-    public Room(Client client , RoomPack pack)
+    public Room(Client client , RoomPack pack , Server server)
     {
         _roomPack = pack;
         _clients.Add(client);
         client.GetRoom = this;
+        _server = server;
     }
 
     public RepeatedField<PlayerPack> GetplayerInfo()
@@ -31,7 +34,7 @@ public class Room
         foreach (var c in _clients)
         {
             PlayerPack player = new PlayerPack();
-            player.Playername = c.UserName;
+            player.Playername = c.GetUserInfo.UserName;
             playerPacks.Add(player);
 
         }
@@ -137,7 +140,47 @@ public class Room
         }
 
         pack.Actioncode = ActionCode.Starting;
+
+        foreach (var client in _clients)
+        {
+            PlayerPack player = new PlayerPack();
+            client.GetUserInfo.Hp = 100;
+            player.Playername = client.GetUserInfo.UserName;
+            player.Hp = client.GetUserInfo.Hp;
+            pack.Playerpack.Add(player);
+        }
+        Console.WriteLine("广播游戏开始");
         pack.Str = "游戏开始";
         Boardcast(null , pack);
+    }
+
+    public void ExitGame(Client client)
+    {
+        MainPack pack = new MainPack();
+        
+        if (client == _clients[0])
+        {
+            //房主退出游戏
+            pack.Actioncode = ActionCode.Exit;
+            pack.Str = "r";
+            Boardcast(client , pack);
+            _server.RemoveRoom(this);
+        }
+        else
+        {
+            //其他成员退出游戏
+            _clients.Remove(client);
+            pack.Actioncode = ActionCode.UpCharacterList;
+
+            foreach (var c in _clients)
+            {
+                PlayerPack playerPack = new PlayerPack();
+                playerPack.Playername = c.GetUserInfo.UserName;
+                playerPack.Hp = c.GetUserInfo.Hp;
+                pack.Playerpack.Add(playerPack);
+            }
+            pack.Str = client.GetUserInfo.UserName;
+            Boardcast(client , pack);
+        }
     }
 }

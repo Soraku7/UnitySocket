@@ -20,13 +20,33 @@ public class Client
 
     private string _username;
 
-    public Room GetRoom
+    public UserInfo GetUserInfo
     {
         get;
         set;
     }
 
-    public string UserName
+    public class UserInfo
+    {
+        public string UserName
+        {
+            get; set;
+        }
+
+        public int Hp
+        {
+            get;
+            set;
+        }
+        
+        public PosPack Pos
+        {
+            get;
+            set;
+        }
+    }
+    
+    public Room GetRoom
     {
         get;
         set;
@@ -52,6 +72,7 @@ public class Client
         
         userData = new UserData();
         message = new Message();
+        GetUserInfo = new UserInfo();
         StartRecieve();
     }
 
@@ -65,7 +86,6 @@ public class Client
         try
         {
             if (socket == null || socket.Connected == false) return;
-            Console.WriteLine("接收");
             int len = socket.EndReceive(iar);
             if(len <= 0)
             {

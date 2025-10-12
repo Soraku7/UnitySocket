@@ -18,6 +18,8 @@ public class ControllerManager
         controllers.Add(userController.GetRequestCode , userController);
         RoomController roomController = new RoomController();
         controllers.Add(roomController.GetRequestCode , roomController);
+        GameController gameController = new GameController();
+        controllers.Add(gameController.GetRequestCode , gameController);
     }
 
     public void HandleRequest(MainPack pack , Client client)
