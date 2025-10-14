@@ -93,8 +93,7 @@ public class Client
                 Close();
                 return;
             }
-        
-            Console.WriteLine("收到客户端数据" + len);
+            
             message.ReadBuffer(len , HandleRequest);
             StartRecieve();
         }
@@ -125,5 +124,10 @@ public class Client
         socket.Close();
         server.RemoveClient(this);
         mysqlConnection.Close();
+    }
+    
+    public void UpPos(MainPack pack)
+    {
+        GetUserInfo.Pos = pack.Playerpack[0].Pospack;
     }
 }

@@ -170,6 +170,7 @@ public class Room
         {
             //其他成员退出游戏
             _clients.Remove(client);
+            client.GetRoom = null;
             pack.Actioncode = ActionCode.UpCharacterList;
 
             foreach (var c in _clients)

@@ -72,7 +72,7 @@ namespace UI
                 GameObject item = Instantiate(itemPrefab, Vector3.zero, Quaternion.identity , _listTransform);
                 PlayerInfoItem playerItem = item.GetComponent<PlayerInfoItem>();
                 playerItem.Set(p.Playername , p.Hp);
-                _itemList.Add(p.PlayerID , playerItem);
+                _itemList.Add(p.Playername , playerItem);
             }
         }
     }

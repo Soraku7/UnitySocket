@@ -89,4 +89,9 @@ public class GameFace : MonoBehaviour
         _uiManager.PopPanel();
         _uiManager.PopPanel();
     }
+
+    public void UpPos(MainPack pack)
+    {
+        _playerManager.UpPos(pack);
+    }
 }
