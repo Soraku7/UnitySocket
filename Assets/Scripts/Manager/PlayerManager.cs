@@ -16,6 +16,7 @@ namespace Manager
 
         private GameObject _character;
         private Transform _spawnPos;
+        private GameObject _bullet;
         
         public string CurPlayerId
         {
@@ -27,6 +28,7 @@ namespace Manager
         {
             base.OnInit();
             _character = Resources.Load("Prefabs/Character") as GameObject;
+            _bullet = Resources.Load("Prefabs/Bullet") as GameObject;
         }
 
         public void AddPlayer(MainPack pack)
@@ -38,12 +40,18 @@ namespace Manager
                 if (p.Playername.Equals(GameFace.Instance.userName))
                 {
                     //创建本地角色
+                    character.AddComponent<Rigidbody2D>().gravityScale = 3;
                     character.AddComponent<UpPosRequest>();
                     character.AddComponent<UpPos>();
                     character.AddComponent<PlayerController>();
+                    character.transform.Find("HandGun").gameObject.AddComponent<FireRequest>();
                     character.transform.Find("HandGun").gameObject.AddComponent<GunController>();
                 }
-                //创建其他客户端角色
+                else
+                {
+                    //创建其他客户端角色
+                }
+                
                 
                 _players.Add(p.Playername , character);
             }
@@ -86,6 +94,18 @@ namespace Manager
                 go.transform.eulerAngles = new Vector3(0 , 0 , characterRot);
                 go.transform.Find("HandGun").eulerAngles = new Vector3(0, 0, gunRot);
             }
+        }
+
+        public void SpawnBullet(MainPack pack)
+        {
+            Vector3 pos = new Vector3(pack.Bulletpack.PosX , pack.Bulletpack.PosY , 0);
+            float rot = pack.Bulletpack.RotZ;
+            Vector3 mousePos = new Vector3(pack.Bulletpack.MousePosX , pack.Bulletpack.MousePosY , 0);
+            Vector3 velocity = (mousePos - pos).normalized * 20;
+            
+            GameObject go = GameObject.Instantiate(_bullet, pos, Quaternion.identity);
+            go.transform.eulerAngles = new Vector3(0, 0, rot);
+            go.GetComponent<Rigidbody2D>().linearVelocity = velocity;
         }
     }
 }

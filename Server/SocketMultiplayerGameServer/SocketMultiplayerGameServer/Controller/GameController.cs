@@ -22,4 +22,10 @@ public class GameController : BaseController
         client.UpPos(pack);//更新位置信息
         return null;
     }
+    
+    public MainPack Fire(Server server , Client client , MainPack pack)
+    {
+        client.GetRoom.Boardcast(client , pack);
+        return null;
+    }
 }

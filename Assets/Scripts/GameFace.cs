@@ -94,4 +94,9 @@ public class GameFace : MonoBehaviour
     {
         _playerManager.UpPos(pack);
     }
+    
+    public void SpawnBullet(MainPack pack)
+    {
+        _playerManager.SpawnBullet(pack);
+    }
 }

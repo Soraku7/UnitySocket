@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Request;
+using UnityEngine;
 
 namespace Player
 {
@@ -9,9 +10,12 @@ namespace Player
         private GameObject _bulletPref;
         private Transform _firePosition;
         
+        private FireRequest _fireRequest;
+        
         private void Start()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _fireRequest = GetComponent<FireRequest>();
             
             _bulletPref = Resources.Load<GameObject>("Prefabs/Bullet") as GameObject;
             _firePosition = transform.Find("Fire");
@@ -49,8 +53,10 @@ namespace Player
                 
                 GameObject bullet = Instantiate(_bulletPref, _firePosition.position, Quaternion.identity);
                 bullet.transform.eulerAngles = new Vector3(0, 0, fireAngle + 90);
-                Vector2 velocity = (mousePos - transform.position).normalized * 20;
+                Vector2 velocity = (mousePos - _firePosition.position).normalized * 20;
                 bullet.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(velocity.x, velocity.y);
+                
+                _fireRequest.SendRequest(_firePosition.position , fireAngle + 90 , mousePos);
             }
             
             
