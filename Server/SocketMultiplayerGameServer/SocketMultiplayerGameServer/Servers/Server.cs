@@ -9,6 +9,7 @@ namespace SocketMultiplayerGameServer.Servers;
 public class Server
 {
     private Socket _socket;
+    private UDPServer us;
 
     private List<Client> _clients = new List<Client>();
     private List<Room> _rooms = new List<Room>();
@@ -23,6 +24,7 @@ public class Server
         _socket.Bind(new IPEndPoint(IPAddress.Any, port));
         _socket.Listen(0);
         StartAccept();
+        us = new UDPServer(6667, this, _controllerManager);
     }
 
     private void StartAccept()
@@ -33,8 +35,35 @@ public class Server
     private void AcceptCallback(IAsyncResult iar)
     {
         Socket clientSocket = _socket.EndAccept(iar);
-        _clients.Add(new Client(clientSocket, this));
+        _clients.Add(new Client(clientSocket, this , us));
         StartAccept();
+    }
+    
+    public Client ClientFromUserName(string username)
+    {
+        foreach (var client in _clients)
+        {
+            if (client.GetUserInfo != null && client.GetUserInfo.UserName.Equals(username))
+            {
+                return client;
+            }
+        }
+
+        return null;
+    }
+
+    public bool SetIEP(EndPoint ipEnd , string user)
+    {
+        foreach (var client in _clients)
+        {
+            if (client.GetUserInfo.UserName == user)
+            {
+                client.IEP = ipEnd;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void HandleRequest(MainPack pack, Client client)
@@ -156,6 +185,6 @@ public class Server
     {
         pack.Str = client.GetUserInfo.UserName + ":" + pack.Str;
         
-        client.GetRoom.Boardcast(client , pack);
+        client.GetRoom.Broadcast(client , pack);
     }
 }

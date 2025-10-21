@@ -37,7 +37,7 @@ namespace Request
             pack.Bulletpack = bulletPack;
             pack.Actioncode = actionCode;
             pack.Requestcode = requestCode;
-            base.SendRequest(pack);
+            base.SendRequestUDP(pack);
         }
 
         public override void OnResponse(MainPack pack)

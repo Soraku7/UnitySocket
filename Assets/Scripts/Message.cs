@@ -53,4 +53,8 @@ public class Message
 
         return head.Concat(data).ToArray();
     }
+    public static Byte[] PackDataUDP(MainPack pack)
+    {
+        return pack.ToByteArray();
+    }
 }

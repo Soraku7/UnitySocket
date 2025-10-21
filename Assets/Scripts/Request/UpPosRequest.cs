@@ -43,7 +43,7 @@ namespace Request
             pack.Requestcode = requestCode;
             pack.Actioncode = actionCode;
             
-            base.SendRequest(pack);
+            base.SendRequestUDP(pack);
         }
         
         public override void OnResponse(MainPack pack)

@@ -42,7 +42,7 @@ public class Room
         return playerPacks;
     }
 
-    public void Boardcast(Client client , MainPack pack)
+    public void Broadcast(Client client , MainPack pack)
     {
         foreach (Client c in _clients)
         {
@@ -53,6 +53,19 @@ public class Room
             }
             
             c.Send(pack); 
+        }
+    }
+
+    public void BroadcastTo(Client client, MainPack mainPack)
+    {
+        foreach (var c in _clients)
+        {
+            
+            if (c.Equals(client))
+            {
+                continue;
+            }
+            c.SendTo(mainPack); 
         }
     }
 
@@ -75,39 +88,40 @@ public class Room
             pack.Playerpack.Add(player);
         }
         
-        Boardcast(client , pack);
+        Broadcast(client , pack);
     }
 
     public void Exit(Server server , Client client)
     {
         MainPack mainPack = new MainPack();
         
-        //判断房主退出
-        if (client == _clients[0])
+        //游戏已经开始
+        if (_roomPack.Statc == 2)
         {
+            ExitGame(client);
+        }
+        else
+        {
+            //游戏未开始
+            if (client == _clients[0])
+            {
+                client.GetRoom = null;
+                mainPack.Actioncode = ActionCode.Exit;
+                Broadcast(client , mainPack);
+                server.RemoveRoom(this);
+                return;
+            }
+            _clients.Remove(client);
+            _roomPack.Statc = 0;
             client.GetRoom = null;
-            mainPack.Actioncode = ActionCode.Exit;
-            Boardcast(client , mainPack);
-            server.RemoveRoom(this);
-            Console.WriteLine("房主退出");
-            return;
+            mainPack.Actioncode = ActionCode.PlayerList;
+            foreach(PlayerPack player in GetplayerInfo())
+            {
+                mainPack.Playerpack.Add(player);
+            }
+            Broadcast(client , mainPack);
         }
-        
-        _clients.Remove(client);
-
-        //更新房间状态为可加入
-        _roomPack.Statc = 0;
-        
-        client.GetRoom = null;
-        
-        mainPack.Actioncode = ActionCode.PlayerList;
-
-        foreach (PlayerPack player in GetplayerInfo())
-        {
-            mainPack.Playerpack.Add(player);
-        }
-        
-        Boardcast(client , mainPack);
+     
     }
 
     public ReturnCode StartGame(Client client)
@@ -129,13 +143,13 @@ public class Room
         pack.Actioncode = ActionCode.Chat;
         pack.Str = "房主已启动游戏";
         
-        Boardcast(null , pack);
+        Broadcast(null , pack);
         Thread.Sleep(1000);
 
         for (int i = 5; i > 0; i--)
         {
             pack.Str = i.ToString();
-            Boardcast(null , pack);
+            Broadcast(null , pack);
             Thread.Sleep(1000);
         }
 
@@ -151,7 +165,7 @@ public class Room
         }
         Console.WriteLine("广播游戏开始");
         pack.Str = "游戏开始";
-        Boardcast(null , pack);
+        Broadcast(null , pack);
     }
 
     public void ExitGame(Client client)
@@ -163,7 +177,7 @@ public class Room
             //房主退出游戏
             pack.Actioncode = ActionCode.Exit;
             pack.Str = "r";
-            Boardcast(client , pack);
+            Broadcast(client , pack);
             _server.RemoveRoom(this);
         }
         else
@@ -181,7 +195,7 @@ public class Room
                 pack.Playerpack.Add(playerPack);
             }
             pack.Str = client.GetUserInfo.UserName;
-            Boardcast(client , pack);
+            Broadcast(client , pack);
         }
     }
 }

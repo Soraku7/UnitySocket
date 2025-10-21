@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System.Net;
+using System.Net.Sockets;
 using MySql.Data.MySqlClient;
 using SocketGameProtocol;
 using SocketMultiplayerGameServer.DAO;
@@ -13,12 +14,16 @@ public class Client
         "database=sys ; data source=localhost ; user = root ; password = 123456789ddd ; pooling = false ; charset = utf8 ; port = 3306";
     
     private Socket socket;
+    private Socket udpSocket;
+    private EndPoint remoteEp;
     private Message message;    
     private UserData userData;
     private Server server;
     private MySqlConnection mysqlConnection;
 
     private string _username;
+
+    public UDPServer us;
 
     public UserInfo GetUserInfo
     {
@@ -51,6 +56,19 @@ public class Client
         get;
         set;
     }
+
+    public EndPoint IEP
+    {
+        get
+        {
+            return remoteEp;
+        }
+        set
+        {
+            remoteEp = value;
+        }
+        
+    }
     
     public UserData GetUserData
     {
@@ -62,10 +80,11 @@ public class Client
         get { return mysqlConnection; }
     }
     
-    public Client(Socket socket , Server server)
+    public Client(Socket socket , Server server , UDPServer udpServer)
     {
         this.socket = socket;
         this.server = server;
+        this.us = udpServer;
 
         mysqlConnection = new MySqlConnection(connectStr);
         mysqlConnection.Open();
@@ -107,6 +126,12 @@ public class Client
     public void Send(MainPack pack)
     {
         socket.Send(Message.PackData(pack));
+    }
+
+    public void SendTo(MainPack mainPack)
+    {
+        if(IEP == null) return;
+        us.SendTo(mainPack , IEP);
     }
     
     private void HandleRequest(MainPack pack)

@@ -16,16 +16,16 @@ public class GameController : BaseController
         return null;
     }
     
-    public MainPack UpPos(Server server , Client client , MainPack pack)
+    public MainPack UpPos(Client client , MainPack pack)
     {
-        client.GetRoom.Boardcast(client , pack);
+        client.GetRoom.BroadcastTo(client , pack);
         client.UpPos(pack);//更新位置信息
         return null;
     }
     
-    public MainPack Fire(Server server , Client client , MainPack pack)
+    public MainPack Fire(Client client , MainPack pack)
     {
-        client.GetRoom.Boardcast(client , pack);
+        client.GetRoom.BroadcastTo(client , pack);
         return null;
     }
 }

@@ -46,6 +46,12 @@ public class GameFace : MonoBehaviour
     {
         _clientManager.Send(pack);
     }
+    
+    public void SendTo(MainPack pack)
+    {
+        pack.User = userName;
+        _clientManager.SendTo(pack);
+    }
 
     public void HandleResponse(MainPack pack)
     {

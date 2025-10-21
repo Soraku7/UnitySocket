@@ -22,7 +22,7 @@ public class ControllerManager
         controllers.Add(gameController.GetRequestCode , gameController);
     }
 
-    public void HandleRequest(MainPack pack , Client client)
+    public void HandleRequest(MainPack pack , Client client , bool isUDP = false)
     {
         Console.WriteLine("响应请求");
         if (controllers.TryGetValue(pack.Requestcode, out BaseController controller))
@@ -35,13 +35,22 @@ public class ControllerManager
                 Console.WriteLine("没有找到对应的处理方法");
                 return;
             }
-            
-            object[] obj = new object[] { server , client , pack };
-            object ret = method.Invoke(controller, obj);
 
-            if (ret != null)
+            object[] obj;
+            if (isUDP)
             {
-                client.Send((MainPack)ret);
+                obj = new object[] {client , pack};
+                method.Invoke(controller, obj);
+            }
+            else
+            {
+                obj = new object[] { server , client , pack };
+                object ret = method.Invoke(controller, obj);
+
+                if (ret != null)
+                {
+                    client.Send((MainPack)ret);
+                }
             }
         }
         else
